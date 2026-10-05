@@ -1,6 +1,8 @@
+/* ========== MOBILE (base) ========== */
 header.top {
   width: 100%;
-  padding: 1rem;
+  padding-block: 0.75rem; /* 12px */
+  padding-inline: 1.5rem; /* 24px */
   margin-inline: auto;
 
   display: flex;
@@ -40,10 +42,9 @@ header.top {
   }
 }
 
+/* ========== TABLET (≥ 768px) ========== */
 @media (min-width: 48rem) {
   header.top {
-    padding: 1.25rem 2rem;
-
     img {
       width: 2rem;
       height: 2rem;
@@ -57,12 +58,14 @@ header.top {
   }
 }
 
+/* ========== DESKTOP (≥ 1280px) ========== */
 @media (min-width: 80rem) {
   header.top {
     max-width: 80rem;
   }
 }
 
+/* ========== HOVER (só em dispositivos com mouse) ========== */
 @media (hover: hover) {
   header.top {
     img[src*='logo']:hover {

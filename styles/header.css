@@ -1,4 +1,3 @@
-/* ========== MOBILE (base) ========== */
 header.top {
   width: 100%;
   padding-block: 0.75rem; /* 12px */
@@ -42,7 +41,6 @@ header.top {
   }
 }
 
-/* ========== TABLET (≥ 768px) ========== */
 @media (min-width: 48rem) {
   header.top {
     img {
@@ -58,14 +56,12 @@ header.top {
   }
 }
 
-/* ========== DESKTOP (≥ 1280px) ========== */
 @media (min-width: 80rem) {
   header.top {
     max-width: 80rem;
   }
 }
 
-/* ========== HOVER (só em dispositivos com mouse) ========== */
 @media (hover: hover) {
   header.top {
     img[src*='logo']:hover {

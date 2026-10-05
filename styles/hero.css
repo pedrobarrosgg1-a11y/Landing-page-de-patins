@@ -1,22 +1,36 @@
+/* ========== MOBILE (base) ========== */
 section.hero {
   max-width: 80rem;
   width: 100%;
-  padding: 2.5rem 2rem;
+  padding: 1rem 1.5rem 3rem; /* 16px 24px 48px */
   margin-inline: auto;
 
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem; /* 32px */
+
+  overflow: hidden; /* fallback p/ navegadores antigos */
+  overflow: clip; /* corta de verdade, sem criar rolagem */
+
+  /* nenhum filho pode ser maior que a seção */
+  & > * {
+    min-width: 0;
+    max-width: 100%;
+  }
 
   & h1 {
     max-width: 40rem;
+    font-size: 2rem; /* 32px */
+    line-height: 1.25; /* 40px */
   }
 
+  /* a "janela" tem exatamente 1 linha de altura, sempre em em */
   & h1 div {
     display: inline-block;
     overflow: hidden;
-    height: 5rem;
+    height: 1.25em; /* = font-size × line-height */
     width: min-content;
     vertical-align: bottom;
   }
@@ -37,10 +51,198 @@ section.hero {
   & h1 span {
     display: block;
 
-    animation: slideUp 5s infinite ease;
+    animation: slideUp 5s 2s infinite ease;
+  }
+
+  /* buttons */
+  & .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem; /* 24px */
+    margin-top: 3rem; /* 48px */
+
+    & .button {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      border-radius: 5rem;
+
+      transition: scale 350ms;
+
+      &.buy {
+        padding: 1.5rem 3rem;
+        background-color: var(--snitap-sun);
+      }
+
+      &.play {
+        order: -1; /* mobile: "Veja em ação" primeiro */
+      }
+
+      &.play span {
+        padding: 1.5rem;
+        border-radius: 50%;
+        background-color: white;
+        display: flex;
+      }
+    }
+
+    & .shadow {
+      box-shadow:
+        0 2px 5px rgb(0 0 0 / 0.1),
+        0 9px 9px rgb(0 0 0 / 0.09),
+        0 20px 12px rgb(0 0 0 / 0.05),
+        0 36px 15px rgb(0 0 0 / 0.01);
+    }
+  }
+
+  /* patins: no mobile a imagem vem antes do texto */
+  & > div:nth-child(2) {
+    display: block;
+    order: -1;
+    width: 100%;
+    max-width: 19.5rem; /* 312px */
+    aspect-ratio: 1;
+
+    & .content {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    & img {
+      position: absolute;
+      width: 100%;
+    }
+
+    & img[src*='ellipse'] {
+      width: 94%;
+      top: 3%;
+      left: 3%;
+
+      transform: translateX(200%);
+      animation: slideIn 3s 200ms ease forwards;
+    }
+
+    & img[src*='patins'] {
+      z-index: 1;
+
+      transform: translateX(200%);
+      animation: slideIn 3s ease forwards;
+    }
+
+    & img[src*='stars-1'] {
+      max-width: 3.5rem;
+      top: 30%;
+      z-index: 0;
+
+      opacity: 0;
+      transform: translateX(400%);
+      animation:
+        slideIn 2s 800ms ease forwards,
+        appear 100ms 800ms forwards;
+    }
+
+    & img[src*='stars-2'] {
+      max-width: 1.6rem;
+      right: 0;
+      bottom: 33%;
+
+      transform: translateX(400%);
+      animation: slideIn 2.2s 800ms ease forwards;
+    }
   }
 }
 
+/* ========== TABLET (≥ 768px) ========== */
+@media (min-width: 48rem) {
+  section.hero {
+    padding: 2.5rem 2rem;
+
+    & h1 {
+      font-size: 3rem;
+    }
+
+    & > div:nth-child(2) {
+      max-width: 26rem;
+
+      & img[src*='stars-1'] {
+        max-width: 4.5rem;
+      }
+
+      & img[src*='stars-2'] {
+        max-width: 2rem;
+      }
+    }
+  }
+}
+
+/* ========== DESKTOP (≥ 1024px) ========== */
+@media (min-width: 64rem) {
+  section.hero {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    & h1 {
+      font-size: var(--text-xl);
+    }
+
+    & .buttons {
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+
+      & .button.play {
+        order: 0; /* desktop volta à ordem do HTML */
+      }
+    }
+
+    & > div:nth-child(2) {
+      order: 0;
+      max-width: 30.5rem;
+      height: 30.5rem;
+      aspect-ratio: auto;
+
+      & img[src*='stars-1'] {
+        max-width: 5.5rem;
+      }
+
+      & img[src*='stars-2'] {
+        max-width: 2.5rem;
+        bottom: 35%;
+      }
+    }
+  }
+}
+
+/* ========== HOVER (só com mouse) ========== */
+@media (hover: hover) {
+  section.hero .buttons .button:hover {
+    scale: 1.1;
+  }
+}
+
+/* ========== ANIMAÇÕES ========== */
+@keyframes slideIn {
+  50% {
+    transform: translateX(-20px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes appear {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Agora em % (altura do próprio span) e em em (o "quique"),
+   então funciona com qualquer tamanho de fonte */
 @keyframes slideUp {
   /* radical static */
   0%,
@@ -50,68 +252,68 @@ section.hero {
 
   /* divertida in */
   23% {
-    transform: translateY(calc(-5rem - 15px));
+    transform: translateY(calc(-100% - 0.1875em));
   }
 
   25% {
-    transform: translateY(calc(-5rem + 10px));
+    transform: translateY(calc(-100% + 0.125em));
   }
 
   27% {
-    transform: translateY(calc(-5rem - 5px));
+    transform: translateY(calc(-100% - 0.0625em));
   }
 
   29% {
-    transform: translateY(calc(-5rem + 5px));
+    transform: translateY(calc(-100% + 0.0625em));
   }
 
   /* divertida static */
   33%,
   55% {
-    transform: translateY(-5rem);
+    transform: translateY(-100%);
   }
 
   /* saudável in */
   56% {
-    transform: translateY(calc(-10rem - 15px));
+    transform: translateY(calc(-200% - 0.1875em));
   }
 
   58% {
-    transform: translateY(calc(-10rem + 10px));
+    transform: translateY(calc(-200% + 0.125em));
   }
 
   60% {
-    transform: translateY(calc(-10rem - 5px));
+    transform: translateY(calc(-200% - 0.0625em));
   }
 
   62% {
-    transform: translateY(calc(-10rem + 5px));
+    transform: translateY(calc(-200% + 0.0625em));
   }
 
   /* saudável static */
   66%,
   88% {
-    transform: translateY(-10rem);
+    transform: translateY(-200%);
   }
 
   /* radical in */
   89% {
-    transform: translateY(calc(-15rem - 15px));
+    transform: translateY(calc(-300% - 0.1875em));
   }
 
   91% {
-    transform: translateY(calc(-15rem + 10px));
+    transform: translateY(calc(-300% + 0.125em));
   }
 
   93% {
-    transform: translateY(calc(-15rem - 5px));
+    transform: translateY(calc(-300% - 0.0625em));
   }
 
   95% {
-    transform: translateY(calc(-15rem + 5px));
+    transform: translateY(calc(-300% + 0.0625em));
   }
 
   100% {
-    transform: translateY(-15rem);
+    transform: translateY(-300%);
   }
 }

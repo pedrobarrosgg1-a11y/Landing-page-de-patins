@@ -204,10 +204,43 @@ section.hero {
   }
 }
 
+@media (min-width: 64rem) and (max-width: 70rem) {
+  section.hero .buttons {
+    flex-direction: column;
+    align-items: flex-start;
+
+    & .button.play {
+      order: -1;
+    }
+  }
+}
+
+@media (max-width: 22.5rem) {
+  section.hero .buttons .button.buy {
+    padding: 1.25rem 1.5rem;
+  }
+}
+
 /* Hover */
 @media (hover: hover) {
   section.hero .buttons .button:hover {
     scale: 1.1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  section.hero h1 span {
+    animation: none;
+  }
+
+  section.hero > div:nth-child(2) img[src] {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+
+  section.hero .buttons .button {
+    transition: none;
   }
 }
 

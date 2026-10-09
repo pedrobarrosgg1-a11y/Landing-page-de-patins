@@ -40,3 +40,10 @@
     transform: translateX(-132px);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .banner .rolling,
+  .banner .bg-gradient-animate {
+    animation: none;
+  }
+}
